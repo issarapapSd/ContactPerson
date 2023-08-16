@@ -4,6 +4,7 @@ import About from '../views/About.vue'
 import Db from '../db.json'
 import Creates from '../views/CreateView.vue'
 import '../style.css'
+import Update from '../views/UpdateView.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -23,6 +24,11 @@ const router = createRouter({
 		{
 			path: '/create',
 			component: Creates
+		},
+		{
+			path: '/update/:id',
+			name: 'update',
+			component: Update
 		},
 	],
 })

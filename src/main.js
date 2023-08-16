@@ -3,6 +3,7 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import { Quasar } from 'quasar'
+// import server from './server'
 // Import icon libraries
 import '@quasar/extras/material-icons/material-icons.css'
 

@@ -1,42 +1,35 @@
 <template>
   <div class="app">
-    <!-- <router-view /> -->
-    <!-- Sidebar -->
-		<Sidebar />
-
-    <!-- Content -->
-    <!-- <router-view /> -->
-
+    <Sidebar />
     <q-layout view="hHh lpR fFf">
-
-    <!-- <q-header elevated class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Title
-        </q-toolbar-title>
-      </q-toolbar>
-
-      <q-tabs align="left">
-      <q-route-tab to="/page1" label="Page One" />
-        <q-route-tab to="/page2" label="Page Two" />
-        <q-route-tab to="/page3" label="Page Three" />
-      </q-tabs>
-    </q-header> -->
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-
+      <q-page-container>
+        <router-view />
+      </q-page-container>
     </q-layout>
-      </div>
-    </template>
+  </div>
+</template>
+
 <script setup>
-  import Sidebar from './components/Sidebar.vue';
+import Sidebar from './components/Sidebar.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const rows = ref([]);
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get('http://localhost:700/api/items');
+    rows.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onMounted(() => {
+  fetchData();
+});
 </script>
-<style Lang="scss">
 
-
+<style lang="scss">
+/* Your custom styles go here */
 </style>

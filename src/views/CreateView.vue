@@ -1,11 +1,19 @@
 <template>
-    <div class="q-pa-md">
-        <div class="q-gutter-md" style="max-width: 1024px">
-            <q-input v-model='name' label="Full Name" />
-            <q-input v-model='phoneNumber' label="Full Phone Number" />
-            <q-input v-model='business' label="Full Company" />
-            <q-input v-model='date' label="Full Date" />
+    <div >
+        <div class="q-gutter-md q-p-x-xl" style="padding: 10%;max-width: 1024px">
+          <q-form
+          @submit="onSubmit"
+          class="q-gutter-md"
+          >
+            <q-input v-model='fname' label="First Name" />
+            <q-input v-model='lname' label="Last Name" />
+            <q-input v-model='username' label="Username" />
+            <q-input v-model='password' label="Password" />
+            <q-input v-model='email' label="E-Mail" />
+            <q-input v-model='avatar' label="Avatar" />
             <q-btn label="Sunmit" type="submit" color ="primary"/>
+          </q-form>
+           
         </div>
     </div>>
 </template>
@@ -14,40 +22,44 @@
 import { ref, onMounted } from 'vue'
 import router from '../router'
 import jsonData from '../db.json'
-const columns = [
-  // ... ส่วนคอลัมน์ที่เดิม ...
-  { name: 'actions', align: 'center', label: 'Actions', field: 'id', sortable: true },
-]
+const fname = ref('Cat')
+const lname = ref('Chat')
+const username = ref('cat.chat@gmail.com')
+const password = ref('1234')
+const email = ref('cat.chat@gmail.com')
+const avatar = ref('https://www.melivecode.com/users/5.png')
+
 const onSubmit = () => {
-    const newContact = {
-    name: name.value,
-    phoneNumber: phoneNumber.value,
-    business: business.value,
-    date: date.value,
-  }
+  var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-  const rows = ref([])
+var raw = JSON.stringify({
+  "fname": fname.value,
+  "lname": lname.value,
+  "username": username.value,
+  "password": password.value,
+  "email": email.value,
+  "avatar": avatar.value,
+});
 
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://www.melivecode.com/api/users/create", requestOptions)
+  .then(response => response.text())
+  .then(result => {
+    alert(result.message)
+    if(result.status === 'ok'){
+      router.push('/')
+    }
+  })
+  .catch(error => console.log('error', error));
+}
 onMounted(() => {
-  // Fetch the JSON data and assign it to the 'rows' ref
-  rows.value = jsonData.contact;
-})
-
-// เพิ่มฟังก์ชันสำหรับการเพิ่มข้อมูลใหม่ลงใน rows
-const onAddNewData = (data) => {
-  rows.value.push(data);
-}
-
-const onEdit = (name) => {
-  alert(name,"edit")
-}
-
-const onDelete = (name) => {
-  alert(name,"delete")
-}
-
-const onCreate = (name) => {
-  router.push('/create')
-}
-}
+  fetchData();
+});
 </script>
