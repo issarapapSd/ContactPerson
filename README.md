@@ -15,7 +15,8 @@ npm i primeicons
 npm install vue-router@4
 
 npm install react-icons --save
-
+npm i -g @quasar/cli
+npm init quasar
 npm install -D tailwindcss    
 
 npm install -D tailwindcss postcss autoprefixer    
@@ -26,6 +27,3 @@ npm install -D @tailwindcss/typography
 
 npm run dev
 
- 
- npm install json-server 
- json-server --watch ../db.json 
