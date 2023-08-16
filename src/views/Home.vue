@@ -14,13 +14,11 @@
         :rows-per-page-options="[10, 25, 50, 100]"
         :pagination="pagination"
       >
-      <template v-slot:body-cell-avatar="props">
-        <q-td :props="props">
-          <q-img
-          :src="props.row.avatar"
-          />
-        </q-td>
-      </template>
+        <template v-slot:body-cell-avatar="props">
+          <q-td :props="props">
+            <q-img :src="props.row.avatar" />
+          </q-td>
+        </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
             <q-btn icon="mode_edit" @click="onEdit(props.row)" />
@@ -45,7 +43,7 @@ const allColumns = ref([
   { name: 'lname', align: 'left', label: 'Last Name', field: 'lname', sortable: true },
   { name: 'username', align: 'left', label: 'Username', field: 'username', sortable: true },
   { name: 'avatar', align: 'center', label: 'Avatar', field: 'avatar' },
-  { name: 'actions', align: 'center',label: 'id', field: 'id',sortable: true },
+  { name: 'actions', align: 'center', label: 'Actions', sortable: false },
 ]);
 const visibleColumns = ref(allColumns);
 const rows = ref([]);
@@ -63,59 +61,28 @@ onMounted(() => {
   fetchData();
 });
 
-const onEdit = (id) => {
-  var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  "id": id.value,
-  "fname": fname.value,
-  "lname": lname.value,
-  "username": username.value,
-  "password": password.value,
-  "email": email.value,
-  "avatar": avatar.value,
-});
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
+const onEdit = (row) => {
+  // Navigate to the edit page with the ID of the selected row
+  router.push(`/update/${row.id}`);
 };
 
-fetch("https://www.melivecode.com/api/users/update", requestOptions)
-  .then(response => response.text())
-  .then(result => {result.message})
-  .catch(error => console.log('error', error));
-};
+const onDelete = (row) => {s
+  const requestOptions = {
+    method: 'DELETE', // Use DELETE for deleting
+    headers: { 'Content-Type': 'application/json' },
+  };
 
-const onDelete = (row) => {
-  
-  var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({
-  "id": id
-});
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://www.melivecode.com/api/users/delete", requestOptions)
-  .then(response => response.text())
-  .then(result => 
-  alert(`Deleted: ${row.fname} ${row.lname}`,
-  onMounted(() => {
-  fetchData();
-})
-  ))
-  .catch(error => console.log('error', error));
-  
+  try {
+    fetch(`https://www.melivecode.com/api/users/delete/${row.id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        alert(`Deleted: ${row.fname} ${row.lname}`);
+        fetchData(); // Fetch data again after deleting
+      })
+      .catch((error) => console.log('Error:', error));
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 
 const onCreate = () => {
