@@ -29,4 +29,8 @@ npx tailwindcss init -p
 npm install -D @tailwindcss/typography
 
 npm run dev
+วิธีเล่นหลังrun สำเร็จ
+กดadd เพิ่มข้อมูล(ต้องเป็นข้อมูลใหม่ที่เพิ่มเท่านั้นถึงจะเล่นขั้นตอนต่อไปได้)
+กดedit แก้ไขข้อมูล
+กดdeleteเพื่อลบข้อมูล
 
