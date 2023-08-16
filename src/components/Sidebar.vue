@@ -44,7 +44,8 @@
 <script setup>
 import { ref } from 'vue'
 import logoURL from '../assets/vue.svg'
-import '/Users/is/contact-person-list/src/style.css'
+// import '/Users/is/contact-person-list/src/style.css'
+import '../style.css'
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
 
 const ToggleMenu = () => {
