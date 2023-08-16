@@ -66,14 +66,17 @@ const onEdit = (row) => {
   router.push(`/update/${row.id}`);
 };
 
-const onDelete = (row) => {s
+const onDelete = (row) => {
   const requestOptions = {
     method: 'DELETE', // Use DELETE for deleting
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: row.id, // Use the ID of the selected row
+    })
   };
 
   try {
-    fetch(`https://www.melivecode.com/api/users/delete/${row.id}`, requestOptions)
+    fetch(`https://www.melivecode.com/api/users/delete`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         alert(`Deleted: ${row.fname} ${row.lname}`);

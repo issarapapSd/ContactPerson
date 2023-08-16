@@ -52,6 +52,7 @@ const onSubmit = async () => {
     method: 'PUT', // Use PUT for updating
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      id:id.value,
       fname: fname.value,
       lname: lname.value,
       username: username.value,
@@ -63,7 +64,7 @@ const onSubmit = async () => {
 
   try {
     const response = await fetch(
-      `https://www.melivecode.com/api/users/${id.value}`,
+      `https://www.melivecode.com/api/users/update`,
       //`https://www.melivecode.com/api/users`+id.value,
       requestOptions
     );
